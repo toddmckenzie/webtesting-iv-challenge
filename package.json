@@ -22,9 +22,11 @@
 	"homepage": "https://github.com/LambdaSchool/Server-Testing#readme",
 	"devDependencies": {
 		"jest": "^23.6.0",
-		"supertest": "^3.3.0"
+		"supertest": "^3.3.0",
+		"cross-env": "^5.2.0"
 	},
 	"dependencies": {
+		
 		"express": "^4.16.4",
 		"nodemon": "^1.19.1"
 	}
