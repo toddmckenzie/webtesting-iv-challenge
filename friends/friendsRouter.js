@@ -1,14 +1,14 @@
-const express = require('express');
 
-const router = express.Router();
-const db = knex(knexConfig.development);
+const router = require('express').Router();
+const fm = require('./friendsModel.js');
+
+
+// router.get('/', (req, res) => {
+//     res.status(200).json({ api: 'up'})
+// })
 
 router.get('/', (req, res) => {
-    res.status(200).json({ api: 'up'})
-})
-
-router.get('/friends', (req, res) => {
-    db('Friends')
+    fm.find()
         .then(results => {
             res.json(results)
         })
@@ -17,37 +17,46 @@ router.get('/friends', (req, res) => {
         })
 });
 
-router.get('/friends/:id', (req, res) => {
-    db('Friends')
-        .where({ id: req.params.id })
-        .first()
+router.get('/:id', (req, res) => {
+   fm.findById(req.params.id)
         .then(result => {
             res.json(result)
         })
         .catch(error => {
-            res.status(500).json(error)
+            res.status(500).json({ message: 'err'})
         })
 });
 
-router.post('/friends', (req, res) => {
-    db('Friends')
-        .insert(req.body, 'id')
+router.post('/', (req, res) => {
+    fm.add(req.body)
         .then(result => {
             res.json(result)
         })
         .catch(error => {
-            res.status(500).json(error)
+            res.status(500).json({ message: 'err'})
         })
 });
 
-router.put('/friends', (req, res) => {
-    db('Friends')
-    .where({ id: req.params.id })
-    .update(req.body)
+router.put('/:id', (req, res) => {
+    fm.update(req.body)
     .then(result => {
         res.json(result)
     })
-    .catch(result => {
-        res.status(500).json(result)
+    .catch(error => {
+        res.status(500).json({ message: 'err'})
     })
 })
+
+router.delete('/:id', (req, res) => {
+    fm.remove(req.params.id)
+    .then(result => {
+        res.status(200).json(result)
+    })
+    .catch(error => {
+        res.status(500).json({ message: 'err'})
+    })
+})
+
+
+module.exports = router;
+

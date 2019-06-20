@@ -1,32 +1,32 @@
-const db = require('../database/dbConfig');
+
+const db = require('../database/dbConfig')
 
 module.exports = {
-    getAll,
+    find,
+    findById,
     add,
-    remove,
     update,
-    find
-
+    remove
 }
-async function insert(friend) {
-    return db('Friends').insert(friend).then(ids => {
-      return db('Friends')
-      .where({ id: ids[0] })
-      .first()
-    });
-  }
-  
-  async function update(id, changes) {
-    return null;
-  }
-  
-  function remove(id) {
-    return db('Friends').where({ id }).del()
-  }
-  
-  function getAll() {
-    return db('Friends');
-  }
-  
-  function findById(id) {
-    return db('Friends').where({ id })
+
+function find() {
+    return db('Friends')
+}
+
+function findById(id) {
+    return db('Friends').where({ id });
+}
+
+function add(friend) {
+    return db('Friends').insert(friend)
+}
+
+function update(id, changes) {
+    return db('Friends').where({ id }).update(changes)
+}
+
+function remove(id){
+    return db('Friends').where({ id }).del();
+}
+
+
