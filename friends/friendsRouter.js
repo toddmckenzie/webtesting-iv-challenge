@@ -3,10 +3,6 @@ const router = require('express').Router();
 const fm = require('./friendsModel.js');
 
 
-// router.get('/', (req, res) => {
-//     res.status(200).json({ api: 'up'})
-// })
-
 router.get('/', (req, res) => {
     fm.find()
         .then(results => {
@@ -38,7 +34,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    fm.update(req.body)
+    fm.update(req.params.id, req.body)
     .then(result => {
         res.json(result)
     })
